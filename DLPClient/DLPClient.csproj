@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk.Worker">
+
+    <PropertyGroup>
+        <OutputType>WinExe</OutputType>
+        <TargetFramework>net9.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <UserSecretsId>dotnet-DLPClient-11a380cd-9770-4612-8f53-027788eead8b</UserSecretsId>
+        <UseWindowsForms>false</UseWindowsForms>
+        <UseWPF>false</UseWPF>
+        <PublishSingleFile>false</PublishSingleFile>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Dodo.HttpClient.ResiliencePolicies" Version="2.1.0"/>
+        <PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.10"/>
+        <PackageReference Include="Microsoft.Extensions.Hosting.WindowsServices" Version="9.0.10"/>
+        <PackageReference Include="Microsoft.Win32.SystemEvents" Version="9.0.10"/>
+        <PackageReference Include="Serilog" Version="4.3.0"/>
+        <PackageReference Include="Serilog.Extensions.Hosting" Version="9.0.0"/>
+        <PackageReference Include="Serilog.Settings.Configuration" Version="9.0.0" />
+        <PackageReference Include="Serilog.Sinks.Console" Version="6.0.0"/>
+        <PackageReference Include="Serilog.Sinks.EventLog" Version="4.0.0" />
+        <PackageReference Include="Serilog.Sinks.File" Version="7.0.0"/>
+        <PackageReference Include="System.DirectoryServices" Version="9.0.10"/>
+        <PackageReference Include="System.Management" Version="9.0.10"/>
+        <PackageReference Include="Topshelf" Version="4.3.0"/>
+        <PackageReference Include="TopShelf.ServiceInstaller" Version="4.3.0"/>
+    </ItemGroup>
+
+</Project>
