@@ -1,0 +1,16 @@
+Certificates/
+*.secrets.props
+Directory.Build.targets
+
+bin/
+obj/
+secrets/
+publish/
+
+*.pfx
+*.cer
+*.pem
+
+*.zip
+*.rar
+*.7z

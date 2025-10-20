@@ -3,31 +3,55 @@
     <PropertyGroup>
         <OutputType>WinExe</OutputType>
         <TargetFramework>net9.0</TargetFramework>
+        <CodeSigningEnabled>true</CodeSigningEnabled>
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
         <UserSecretsId>dotnet-DLPClient-11a380cd-9770-4612-8f53-027788eead8b</UserSecretsId>
         <UseWindowsForms>false</UseWindowsForms>
         <UseWPF>false</UseWPF>
         <PublishSingleFile>false</PublishSingleFile>
+        <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+        <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+        <DebugType>full</DebugType>
+        <DebugSymbols>true</DebugSymbols>
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+        <DebugType>pdbonly</DebugType>
+        <DebugSymbols>true</DebugSymbols>
+        <Optimize>true</Optimize>
     </PropertyGroup>
 
     <ItemGroup>
         <PackageReference Include="Dodo.HttpClient.ResiliencePolicies" Version="2.1.0"/>
+        <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="9.0.10" />
         <PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.10"/>
         <PackageReference Include="Microsoft.Extensions.Hosting.WindowsServices" Version="9.0.10"/>
         <PackageReference Include="Microsoft.Win32.SystemEvents" Version="9.0.10"/>
         <PackageReference Include="Serilog" Version="4.3.0"/>
         <PackageReference Include="Serilog.Extensions.Hosting" Version="9.0.0"/>
-        <PackageReference Include="Serilog.Settings.Configuration" Version="9.0.0" />
+        <PackageReference Include="Serilog.Settings.Configuration" Version="9.0.0"/>
         <PackageReference Include="Serilog.Sinks.Console" Version="6.0.0"/>
-        <PackageReference Include="Serilog.Sinks.EventLog" Version="4.0.0" />
+        <PackageReference Include="Serilog.Sinks.EventLog" Version="4.0.0"/>
         <PackageReference Include="Serilog.Sinks.File" Version="7.0.0"/>
-        <PackageReference Include="TaskScheduler" Version="2.12.2" />
+        <PackageReference Include="TaskScheduler" Version="2.12.2"/>
         <PackageReference Include="Topshelf" Version="4.3.0"/>
         <PackageReference Include="TopShelf.ServiceInstaller" Version="4.3.0"/>
         <Content Update="appsettings.json">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </Content>
     </ItemGroup>
+    
+    <Target Name="SignOutput" AfterTargets="PostBuildEvent">
+        <PropertyGroup>
+            <SignToolPath>$(ProgramFiles(x86))\Windows Kits\10\bin\10.0.26100.0\x86\signtool.exe</SignToolPath>
+            <TimeStampServer>http://timestamp.globalsign.com</TimeStampServer>
+        </PropertyGroup>
 
+        <Exec Command="&quot;$(SignToolPath)&quot; sign /fd SHA256 /f &quot;$(ProjectDir)MyCodeSigning.pfx&quot; /p &quot;$(CodeSigningPassword)&quot; /tr &quot;$(TimeStampServer)&quot; &quot;$(PublishDir)*.exe&quot;"
+              Condition="Exists('$(ProjectDir)MyCodeSigning.pfx')"/>
+    </Target>
 </Project>
