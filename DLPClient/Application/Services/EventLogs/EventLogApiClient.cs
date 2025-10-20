@@ -8,45 +8,49 @@ namespace DLPClient.Application.Services.EventLogs;
 [SupportedOSPlatform("windows")]
 public static class EventLogApiClient
 {
-    public static List<EventLogEntry> GetLogonLogs(int entriesOfLast)
+    public static async Task<List<EventLogEntry>> GetLogonLogs(int entriesOfLast)
     {
-        return GetLogs(
+        return await GetLogs(
             entriesOfLast,
             ConstRegistry.SystemConstantIds.LogName,
             ConstRegistry.SystemConstantIds.WinlogonId
         );
     }
 
-    public static List<EventLogEntry> GetLogoffLogs(int entriesOfLast)
+    public static async Task<List<EventLogEntry>> GetLogoffLogs(int entriesOfLast)
     {
-        return GetLogs(
+        return await GetLogs(
             entriesOfLast,
             ConstRegistry.SystemConstantIds.LogName,
             ConstRegistry.SystemConstantIds.WinlogoffId
         );
     }
 
-    private static List<EventLogEntry> GetLogs(int entriesOfLast, string logName, int eventId)
+    private static async Task<List<EventLogEntry>> GetLogs(int entriesOfLast, string logName, int eventId)
     {
-        using EventLog eventLog = new(logName);
-        var entries = eventLog.Entries;
+        return await Task.Run(() =>
+            {
+                using EventLog eventLog = new(logName);
+                var entries = eventLog.Entries;
 
-        if (entries == null || entries.Count == 0) return [];
+                if (entries == null || entries.Count == 0) return [];
 
-        entriesOfLast = Math.Min(entriesOfLast, entries.Count);
+                entriesOfLast = Math.Min(entriesOfLast, entries.Count);
 
-        Log.Debug(
-            "Total entries in {LogName} log: {EntriesCount}, looking for last {EntriesOfLast} entries with ID: {Id}",
-            logName,
-            entries.Count,
-            entriesOfLast,
-            eventId
+                Log.Debug(
+                    "Total entries in {LogName} log: {EntriesCount}, looking for last {EntriesOfLast} entries with ID: {Id}",
+                    logName,
+                    entries.Count,
+                    entriesOfLast,
+                    eventId
+                );
+
+                return eventLog.Entries
+                    .Cast<EventLogEntry>()
+                    .Where(entry => entry.InstanceId == eventId)
+                    .TakeLast(entriesOfLast)
+                    .ToList();
+            }
         );
-
-        return eventLog.Entries
-            .Cast<EventLogEntry>()
-            .Where(entry => entry.InstanceId == eventId)
-            .TakeLast(entriesOfLast)
-            .ToList();
     }
 }

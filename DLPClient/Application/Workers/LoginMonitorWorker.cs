@@ -11,8 +11,12 @@ public class LoginMonitorWorker : BackgroundService
     {
         while (!stoppingToken.IsCancellationRequested)
         {
-            var logonList = EventLogApiClient.GetLogonLogs(10);
-            var logoffList = EventLogApiClient.GetLogoffLogs(10);
+            var logonTask = EventLogApiClient.GetLogonLogs(10);
+            var logoffTask = EventLogApiClient.GetLogoffLogs(10);
+            
+            await Task.WhenAll(logonTask, logoffTask);
+            
+            Log.Information("Logon: {LogonLogs} Logoff: {LogoffLogs}", logonTask.Result.Count, logoffTask.Result.Count);
             
             //TODO
             
