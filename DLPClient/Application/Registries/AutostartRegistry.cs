@@ -9,16 +9,18 @@ namespace DLPClient.Application.Registries;
 public static class AutostartRegistry
 {
     [SupportedOSPlatform("windows")]
-    public static void RegisterInStartup()
+    public static void CreateAutostart()
     {
-        DeleteTask();
-        
-        if (GetTask() == null)
-            CreateTask();
+        RegistryAutorun();
+        RegistryTask();
+    }
 
+    [SupportedOSPlatform("windows")]
+    private static void RegistryAutorun()
+    {
         const string serviceName = ConstRegistry.ServiceName;
 
-        var registryKey = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Run", true);
+        var registryKey = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Run", true);
 
         if (registryKey == null)
         {
@@ -29,7 +31,16 @@ public static class AutostartRegistry
         if (registryKey.GetValue(serviceName) != null)
             registryKey.DeleteValue(serviceName);
 
-        registryKey.SetValue(serviceName, Environment.CurrentDirectory);
+        registryKey.SetValue(serviceName, '"' + ConstRegistry.AppExeLocation + '"');
+    }
+
+    [SupportedOSPlatform("windows")]
+    private static void RegistryTask()
+    {
+        DeleteTask();
+
+        if (GetTask() == null)
+            CreateTask();
     }
 
     private static void CreateTask()
@@ -70,8 +81,6 @@ public static class AutostartRegistry
     {
         return TaskService.Instance
             .AllTasks
-            .FirstOrDefault(x =>
-                x.Name.Equals(ConstRegistry.ServiceName, StringComparison.OrdinalIgnoreCase)
-            );
+            .FirstOrDefault(task => task.Name.Equals(ConstRegistry.ServiceName, StringComparison.OrdinalIgnoreCase));
     }
 }

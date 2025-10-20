@@ -10,7 +10,7 @@ try
 {
     Log.Information("Starting application {AppExeLocation}", ConstRegistry.AppExeLocation);
 
-    AutostartRegistry.RegisterInStartup();
+    AutostartRegistry.CreateAutostart();
 
     await HostRegistry.CreateHost(args).RunAsync();
 }

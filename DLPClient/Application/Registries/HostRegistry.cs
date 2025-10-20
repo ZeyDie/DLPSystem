@@ -17,7 +17,7 @@ public static class HostRegistry
 {
     public static IHost CreateHost(string[] args)
     {
-        var serviceName = ConstRegistry.ServiceName;
+        const string serviceName = ConstRegistry.ServiceName;
 
         return Host.CreateDefaultBuilder(args)
             .UseWindowsService(options => { options.ServiceName = serviceName; })
@@ -44,10 +44,7 @@ public static class HostRegistry
                         .AddResiliencePolicies();
 
                     services.AddSingleton<UserHandler>();
-
-                    //services.AddSingleton<WindowsServiceInstaller>();
-                    //services.AddWindowsService<WindowsServiceInstaller>();
-
+                    
                     services.AddHostedService<BackgroundWorker>();
                     services.AddHostedService<LoginMonitorWorker>();
                     services.AddHostedService<StatusComputerWorker>();
@@ -58,7 +55,6 @@ public static class HostRegistry
                         options.ServicesStopConcurrently = false;
                         options.BackgroundServiceExceptionBehavior = BackgroundServiceExceptionBehavior.StopHost;
                     });
-                    //services.AddHostedService<WinSessionMonitorWorker>();
                 }
             )
             .UseDefaultServiceProvider((context, options) =>
