@@ -44,7 +44,6 @@ public static class HostRegistry
                         .AddResiliencePolicies();
 
                     services.AddSingleton<UserHandler>();
-                    services.AddSingleton<EventLogApiClient>();
 
                     //services.AddSingleton<WindowsServiceInstaller>();
                     //services.AddWindowsService<WindowsServiceInstaller>();
