@@ -1,7 +1,9 @@
-﻿using System.Text.Json;
+﻿using System.Runtime.Versioning;
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using DLPClient.Application.Handlers;
 using DLPClient.Application.Models.Settings;
+using DLPClient.Application.Services.EventLogs;
 using DLPClient.Application.Services.Https;
 using DLPClient.Application.Services.Https.Basic;
 using DLPClient.Application.Workers;
@@ -10,6 +12,7 @@ using Serilog;
 
 namespace DLPClient.Application.Registries;
 
+[SupportedOSPlatform("windows")]
 public static class HostRegistry
 {
     public static IHost CreateHost(string[] args)
@@ -41,11 +44,13 @@ public static class HostRegistry
                         .AddResiliencePolicies();
 
                     services.AddSingleton<UserHandler>();
+                    services.AddSingleton<EventLogApiClient>();
 
                     //services.AddSingleton<WindowsServiceInstaller>();
                     //services.AddWindowsService<WindowsServiceInstaller>();
 
                     services.AddHostedService<BackgroundWorker>();
+                    services.AddHostedService<LoginMonitorWorker>();
                     services.AddHostedService<StatusComputerWorker>();
 
                     services.Configure<HostOptions>(options =>

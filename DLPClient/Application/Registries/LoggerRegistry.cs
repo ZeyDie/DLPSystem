@@ -1,4 +1,5 @@
 ﻿using System.Runtime.Versioning;
+using Microsoft.Extensions.FileProviders;
 using Serilog;
 using Serilog.Core;
 using Serilog.Events;
@@ -10,15 +11,13 @@ public static class LoggerRegistry
 {
     public static Logger CreateLogger()
     {
+        var profile = Environment.GetEnvironmentVariable("DOTNET_ENVIRONMENT");
+        
         return new LoggerConfiguration()
             .ReadFrom.Configuration(
                 new ConfigurationBuilder()
-                    .SetBasePath(Directory.GetCurrentDirectory())
-                    .AddJsonFile("appsettings.json")
-                    .AddJsonFile(
-                        $"appsettings.{Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Development"}.json",
-                        true
-                    )
+                    .SetBasePath(ConstRegistry.AppLocation)
+                    .AddJsonFile(profile != null ? $"appsettings.{profile}.json" : "appsettings.json")
                     .Build()
             )
             /*.MinimumLevel.Information()

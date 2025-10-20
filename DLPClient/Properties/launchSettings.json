@@ -1,12 +1,16 @@
 ﻿{
   "$schema": "https://json.schemastore.org/launchsettings.json",
   "profiles": {
-    "DLPClient": {
+    "DLPClient Dev": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "environmentVariables": {
         "DOTNET_ENVIRONMENT": "Development"
       }
+    },
+    "DLPClient Prod": {
+      "commandName": "Project",
+      "dotnetRunMessages": true,
     }
   }
 }

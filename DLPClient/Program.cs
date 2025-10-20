@@ -8,6 +8,8 @@ UserUtil.CurrentUser = Environment.UserName;
 
 try
 {
+    Log.Information("Starting application {AppExeLocation}", ConstRegistry.AppExeLocation);
+
     AutostartRegistry.RegisterInStartup();
 
     await HostRegistry.CreateHost(args).RunAsync();
