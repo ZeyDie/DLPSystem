@@ -16,7 +16,7 @@ public class LoginMonitorWorker : BackgroundService
             
             await Task.WhenAll(logonTask, logoffTask);
             
-            Log.Information("Logon: {LogonLogs} Logoff: {LogoffLogs}", logonTask.Result.Count, logoffTask.Result.Count);
+            Log.Debug("Logon: {LogonLogs} Logoff: {LogoffLogs}", logonTask.Result.Count, logoffTask.Result.Count);
             
             //TODO
             

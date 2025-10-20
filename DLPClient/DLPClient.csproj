@@ -22,8 +22,6 @@
         <PackageReference Include="Serilog.Sinks.Console" Version="6.0.0"/>
         <PackageReference Include="Serilog.Sinks.EventLog" Version="4.0.0" />
         <PackageReference Include="Serilog.Sinks.File" Version="7.0.0"/>
-        <PackageReference Include="System.DirectoryServices" Version="9.0.10"/>
-        <PackageReference Include="System.Management" Version="9.0.10"/>
         <PackageReference Include="TaskScheduler" Version="2.12.2" />
         <PackageReference Include="Topshelf" Version="4.3.0"/>
         <PackageReference Include="TopShelf.ServiceInstaller" Version="4.3.0"/>
