@@ -97,7 +97,7 @@ echo [5/7] Creating code signing certificate using PowerShell...
 
 :: Step 1: Create certificate using PowerShell - SINGLE LINE APPROACH
 echo [INFO] Creating certificate with PowerShell...
-powershell -Command "try { $cert = New-SelfSignedCertificate -Type CodeSigning -Subject 'CN=!COMPANY! Code Signing' -KeyAlgorithm RSA -KeyLength 4096 -HashAlgorithm SHA256 -CertStoreLocation 'Cert:\CurrentUser\My' -KeyExportPolicy Exportable -KeyUsage DigitalSignature -KeyUsageProperty Sign -TextExtension @('2.5.29.37={text}1.3.6.1.5.5.7.3.3') -NotAfter (Get-Date).AddYears(5); $pwd = ConvertTo-SecureString '!PASSWORD!' -AsPlainText -Force; Export-PfxCertificate -Cert $cert -FilePath 'Certificates\!CLEAN_COMPANY!.pfx' -Password $pwd; Export-Certificate -Cert $cert -FilePath 'Certificates\!CLEAN_COMPANY!.cer'; Write-Host '[OK] Certificate created!' -ForegroundColor Green; Write-Host '[OK] Thumbprint: ' $cert.Thumbprint -ForegroundColor Cyan; exit 0 } catch { Write-Host '[ERROR] ' $_.Exception.Message -ForegroundColor Red; exit 1 }"
+powershell -Command "try { $cert = New-SelfSignedCertificate -Type CodeSigning -Subject 'CN=!COMPANY! Code Signing' -KeyAlgorithm RSA -KeyLength 4096 -HashAlgorithm SHA256 -CertStoreLocation 'Cert:\CurrentUser\My' -KeyExportPolicy Exportable -KeyUsage DigitalSignature -KeyUsageProperty Sign -TextExtension @('2.5.29.37={text}1.3.6.1.5.5.7.3.3') -NotAfter (Get-Date).AddYears(1); $pwd = ConvertTo-SecureString '!PASSWORD!' -AsPlainText -Force; Export-PfxCertificate -Cert $cert -FilePath 'Certificates\!CLEAN_COMPANY!.pfx' -Password $pwd; Export-Certificate -Cert $cert -FilePath 'Certificates\!CLEAN_COMPANY!.cer'; Write-Host '[OK] Certificate created!' -ForegroundColor Green; Write-Host '[OK] Thumbprint: ' $cert.Thumbprint -ForegroundColor Cyan; exit 0 } catch { Write-Host '[ERROR] ' $_.Exception.Message -ForegroundColor Red; exit 1 }"
 
 set CERT_RESULT=%errorLevel%
 
@@ -178,13 +178,11 @@ echo    • Certificates\!CLEAN_COMPANY!.pfx (Certificate with private key)
 echo    • Certificates\!CLEAN_COMPANY!.cer (Public key only)
 echo    • local.secrets.props (MSBuild secrets)
 echo    • Directory.Build.targets (Auto-signing config)
-echo    • DLPClient.csproj (DLPClient project)
-echo    • Program.cs (DLPClient source code)
 echo.
 echo 🔐 SECURITY INFORMATION:
 echo    • Password: !PASSWORD!
 echo    • Certificate: !COMPANY! Code Signing
-echo    • Valid until: 5 years from now
+echo    • Valid until: 1 years from now
 echo    • Store: CurrentUser\My (Personal certificate store)
 echo.
 echo 🔍 SIGNTOOL STATUS: !SIGNTOOL_PATH!
