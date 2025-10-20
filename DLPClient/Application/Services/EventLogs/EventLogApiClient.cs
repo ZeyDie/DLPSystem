@@ -45,18 +45,7 @@ public static class EventLogApiClient
 
         return eventLog.Entries
             .Cast<EventLogEntry>()
-            .Where(entry =>
-                {
-                    try
-                    {
-                        return entry.InstanceId == eventId;
-                    }
-                    catch
-                    {
-                        return false;
-                    }
-                }
-            )
+            .Where(entry => entry.InstanceId == eventId)
             .TakeLast(entriesOfLast)
             .ToList();
     }
