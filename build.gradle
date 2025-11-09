@@ -1,0 +1,77 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.+'
+    id 'io.spring.dependency-management' version '1.+'
+}
+
+version = '1.0-SNAPSHOT'
+
+allprojects {
+    repositories {
+        mavenCentral()
+
+        flatDir {
+            dirs '../../libs'
+        }
+    }
+
+    def jdk = JavaLanguageVersion.of(21);
+
+    java {
+        sourceCompatibility = jdk
+        targetCompatibility = jdk
+
+        toolchain {
+            languageVersion = jdk
+        }
+    }
+
+    compileJava.options.encoding = 'UTF-8'
+
+    tasks.withType(JavaCompile) {
+        options.encoding = 'UTF-8'
+    }
+
+    tasks.withType(JavaCompile).configureEach {
+        options.compilerArgs += "--enable-preview"
+    }
+
+    tasks.withType(Test).configureEach {
+        jvmArgs += "--enable-preview"
+    }
+
+    tasks.withType(JavaExec).configureEach {
+        jvmArgs += "--enable-preview"
+    }
+}
+
+subprojects {
+    apply plugin: 'java'
+
+    group = 'com.zeydie.dlpsystem'
+    version = rootProject.version
+
+    dependencies {
+        // https://mvnrepository.com/artifact/org.projectlombok/lombok
+        compileOnly group: "org.projectlombok", name: "lombok", version: "${lombok}"
+        annotationProcessor group: "org.projectlombok", name: "lombok", version: "${lombok}"
+
+        // https://mvnrepository.com/artifact/org.jetbrains/annotations
+        implementation group: "org.jetbrains", name: "annotations", version: "${annotations}"
+
+        // https://mapstruct.org/documentation/installation/
+        implementation group: 'org.mapstruct', name: 'mapstruct', version: "${mapstruct}"
+        annotationProcessor group: 'org.mapstruct', name: 'mapstruct-processor', version: "${mapstruct}"
+        implementation group: 'org.projectlombok', name: 'lombok-mapstruct-binding', version: "0.2.+"
+
+        // https://mvnrepository.com/artifact/org.hibernate.orm/hibernate-core
+        implementation group: 'com.google.guava', name: 'guava', version: "${guava}"
+
+        // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-web
+        implementation group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: "${boot}"
+        // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-actuator
+        implementation group: 'org.springframework.boot', name: 'spring-boot-starter-actuator', version: "${boot}"
+        // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-cache
+        implementation group: 'org.springframework.boot', name: 'spring-boot-starter-cache', version: "${boot}"
+    }
+}

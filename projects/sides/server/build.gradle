@@ -1,0 +1,24 @@
+plugins {
+    id 'org.springframework.boot'
+    id 'io.spring.dependency-management'
+}
+
+bootJar {
+    mainClass = 'com.zeydie.dlpsystem.server.ServerLaunch'
+    archiveFileName = "${rootProject.rootProject.name}-${rootProject.rootProject.version}.jar"
+}
+
+dependencies {
+    implementation project(path: ':projects:api')
+    implementation project(path: ':projects:common')
+    implementation project(path: ':projects:services:logger-service')
+    implementation project(path: ':projects:services:ldap-service')
+
+    // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-security
+    implementation group: "org.springframework.boot", name: "spring-boot-starter-security", version: "${boot}"
+    // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-jpa
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa', version: "${boot}"
+
+    runtimeOnly group: 'com.microsoft.sqlserver', name: 'mssql-jdbc', version: "${mssql}"
+    runtimeOnly group: 'com.h2database', name: 'h2', version: "${h2}"
+}

@@ -1,0 +1,10 @@
+rootProject.name = 'DLPSystem'
+
+include 'projects:api'
+include 'projects:common'
+
+include 'projects:services:logger-service'
+include 'projects:services:ldap-service'
+
+include 'projects:sides:client'
+include 'projects:sides:server'
