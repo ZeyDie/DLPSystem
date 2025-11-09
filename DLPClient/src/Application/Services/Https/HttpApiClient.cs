@@ -14,7 +14,7 @@ public class HttpApiClient(
 )
     : IHttpApiClient
 {
-    public void SendRequest<T>(params T[] requests)
+    /*public void SendRequest<T>(params T[] requests)
     {
         foreach (var request in requests)
             switch (request)
@@ -26,16 +26,21 @@ public class HttpApiClient(
                     SendStatusUserRequest(statusUserRequest);
                     break;
             }
-    }
+    }*/
 
-    public void SendStatusComputerRequest(StatusComputerRequest request)
+    public void SendComputerStatusRequest(ComputerStatusRequest request)
     {
         SendMethodRequest(Put, "/computer/status", request);
     }
 
-    public void SendStatusUserRequest(StatusUserRequest request)
+    public void SendUserStatusRequest(UserStatusRequest request)
     {
         SendMethodRequest(Put, "/user/status", request);
+    }
+    
+    public void SendUserAuthRequest(UserAuthRequest request)
+    {
+        SendMethodRequest(Post, "/user/auth", request);
     }
 
     private async void SendMethodRequest(HttpMethod httpMethod, string endpoint, object request)

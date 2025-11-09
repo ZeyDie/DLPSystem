@@ -15,14 +15,14 @@ public class StatusComputerWorker(
 
         while (!stoppingToken.IsCancellationRequested)
         {
-            var computerRequest = new StatusComputerRequest(
+            var computerRequest = new ComputerStatusRequest(
                 ComputerUtil.GetComputerName(),
                 ComputerUtil.GetDomainName(),
                 ComputerUtil.GetLocalIpAddress(),
                 ComputerUtil.GetSystemBootMillis()
             );
 
-            httpClient.SendRequest<object>(computerRequest);
+            httpClient.SendComputerStatusRequest(computerRequest);
 
             await Task.Delay(10000, stoppingToken);
         }

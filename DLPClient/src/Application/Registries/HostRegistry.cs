@@ -42,8 +42,8 @@ public static class HostRegistry
                             client.Timeout = TimeSpan.FromSeconds(settings.Timeout);
                         })
                         .AddResiliencePolicies();
-
-                    services.AddSingleton<UserHandler>();
+                    
+                    services.AddSingleton<AuthHandler>();
                     
                     services.AddHostedService<BackgroundWorker>();
                     services.AddHostedService<LoginMonitorWorker>();

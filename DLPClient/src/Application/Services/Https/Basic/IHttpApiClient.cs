@@ -5,9 +5,11 @@ namespace DLPClient.Application.Services.Https.Basic;
 
 public interface IHttpApiClient
 {
-    void SendRequest<T>(params T[] requests);
+    //void SendRequest<T>(params T[] requests);
 
-    void SendStatusComputerRequest(StatusComputerRequest request);
+    void SendComputerStatusRequest(ComputerStatusRequest request);
 
-    void SendStatusUserRequest(StatusUserRequest request);
+    void SendUserStatusRequest(UserStatusRequest request);
+
+    void SendUserAuthRequest(UserAuthRequest request);
 }
