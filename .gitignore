@@ -28,6 +28,10 @@ replay_pid*
 build
 databases
 logs
+data
 
 *.cfg
 *.data
+*.db
+
+.env
