@@ -53,12 +53,12 @@ public static class AutostartRegistry
 
     private static void CreateTask()
     {
-        var bootTrigger = new BootTrigger();
-        bootTrigger.Delay = TimeSpan.FromSeconds(1);
+        var loginTrigger = new LogonTrigger();
+        loginTrigger.Delay = TimeSpan.FromSeconds(1);
 
         var taskDefinition = TaskService.Instance.NewTask();
 
-        taskDefinition.Triggers.Add(bootTrigger);
+        taskDefinition.Triggers.Add(loginTrigger);
 
         taskDefinition.Settings.Hidden = true;
         taskDefinition.Settings.Enabled = true;
@@ -68,10 +68,9 @@ public static class AutostartRegistry
         taskDefinition.Settings.ExecutionTimeLimit = TimeSpan.Zero;
         taskDefinition.Settings.AllowHardTerminate = false;
         taskDefinition.Settings.MultipleInstances = TaskInstancesPolicy.StopExisting;
-
-        taskDefinition.Principal.UserId = "SYSTEM";
-        taskDefinition.Principal.RunLevel = TaskRunLevel.Highest;
-        taskDefinition.Principal.LogonType = TaskLogonType.ServiceAccount;
+        
+        taskDefinition.Principal.RunLevel = TaskRunLevel.LUA;
+        taskDefinition.Principal.LogonType = TaskLogonType.InteractiveToken;
 
         taskDefinition.Actions.Add(new ExecAction(ConstRegistry.AppExeLocation, "", ConstRegistry.AppLocation));
 
