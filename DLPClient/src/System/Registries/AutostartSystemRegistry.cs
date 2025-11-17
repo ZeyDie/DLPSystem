@@ -65,7 +65,7 @@ public static class AutostartSystemRegistry
 
     private static void CreateTask()
     {
-        var userId = "SYSTEM";
+        const string userId = "SYSTEM";
 
         var bootTrigger = new BootTrigger();
         bootTrigger.Delay = TimeSpan.FromSeconds(1);
@@ -91,7 +91,7 @@ public static class AutostartSystemRegistry
 
         TaskService.Instance.RootFolder.RegisterTaskDefinition(ConstRegistry.ServiceName, taskDefinition);
         
-        Log.Information("Task for {UserId} created", $"{userId}");
+        Log.Information("Task for {UserId} created", userId);
     }
 
     private static void DeleteTask()

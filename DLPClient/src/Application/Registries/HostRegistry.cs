@@ -29,7 +29,7 @@ public static class HostRegistry
                     services.AddWindowsService(options => { options.ServiceName = serviceName; });
 
                     services.AddSingleton(context.Configuration.GetSection("AppSettings").Get<AppSettings>());
-                    services.AddSingleton<JsonSerializerOptions>(provider => new JsonSerializerOptions
+                    services.AddSingleton<JsonSerializerOptions>(_ => new JsonSerializerOptions
                     {
                         WriteIndented = false,
                         DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
@@ -45,10 +45,10 @@ public static class HostRegistry
                         })
                         .AddResiliencePolicies();
 
-                    services.AddSingleton<AuthHandler>();
-
-                    if (!UserUtil.IsUser())
+                    if (UserUtil.IsUser())
                     {
+                        services.AddSingleton<AuthHandler>();
+                        
                         services.AddHostedService<AuthWorker>();
                     }
 
