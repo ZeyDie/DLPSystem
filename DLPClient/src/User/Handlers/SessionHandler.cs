@@ -108,7 +108,7 @@ public class SessionHandler(
             );
 
             if (type != Type.Unnamed)
-                httpClient.SendUserAuthRequest(
+                httpClient.SendUserSessionRequest(
                     new UserSessionRequest(
                         user,
                         domain,

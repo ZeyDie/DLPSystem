@@ -11,5 +11,5 @@ public interface IHttpApiClient
 
     void SendUserStatusRequest(UserStatusRequest request);
 
-    void SendUserAuthRequest(UserSessionRequest request);
+    void SendUserSessionRequest(UserSessionRequest request);
 }
