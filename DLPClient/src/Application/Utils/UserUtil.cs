@@ -32,7 +32,7 @@ public static class UserUtil
     [SupportedOSPlatform("windows")]
     public static bool IsSystem()
     {
-        return GetPrincipal().IsInRole(WindowsBuiltInRole.SystemOperator);
+        return GetCurrentUser().IsSystem;
     }
     
     [SupportedOSPlatform("windows")]
