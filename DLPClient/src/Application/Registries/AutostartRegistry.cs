@@ -68,7 +68,8 @@ public static class AutostartRegistry
         taskDefinition.Settings.ExecutionTimeLimit = TimeSpan.Zero;
         taskDefinition.Settings.AllowHardTerminate = false;
         taskDefinition.Settings.MultipleInstances = TaskInstancesPolicy.StopExisting;
-        
+
+        taskDefinition.Principal.UserId = Environment.UserName;
         taskDefinition.Principal.RunLevel = TaskRunLevel.LUA;
         taskDefinition.Principal.LogonType = TaskLogonType.InteractiveToken;
 
