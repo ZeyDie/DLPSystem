@@ -55,6 +55,7 @@ public static class AutostartRegistry
     {
         var loginTrigger = new LogonTrigger();
         loginTrigger.Delay = TimeSpan.FromSeconds(1);
+        loginTrigger.UserId = Environment.UserName;
 
         var taskDefinition = TaskService.Instance.NewTask();
 
