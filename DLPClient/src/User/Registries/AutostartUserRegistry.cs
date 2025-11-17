@@ -59,7 +59,7 @@ public static class AutostartUserRegistry
 
         taskDefinition.Actions.Add(new ExecAction(ConstRegistry.AppExeLocation, "", ConstRegistry.AppLocation));
 
-        TaskService.Instance.RootFolder.RegisterTaskDefinition(ConstRegistry.ServiceName, taskDefinition);
+        TaskService.Instance.RootFolder.RegisterTaskDefinition(GetTaskName(), taskDefinition);
 
         Log.Information("Task for {UserId} created", $"{userId}");
     }
@@ -76,6 +76,8 @@ public static class AutostartUserRegistry
         return TaskService.Instance
             .AllTasks
             .FirstOrDefault(task =>
-                task.Name.Equals(ConstRegistry.ServiceName + " + " + UserUtil.GetCurrentUser().Name, StringComparison.OrdinalIgnoreCase));
+                task.Name.Equals(GetTaskName(), StringComparison.OrdinalIgnoreCase));
     }
+
+    private static string GetTaskName() => ConstRegistry.ServiceName + " + " + UserUtil.GetCurrentUser().Name;
 }

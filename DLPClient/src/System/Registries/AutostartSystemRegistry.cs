@@ -57,7 +57,7 @@ public static class AutostartSystemRegistry
     [SupportedOSPlatform("windows")]
     private static void RegistryTask()
     {
-        //DeleteTask();
+        DeleteTask();
 
         if (GetTask() == null)
             CreateTask();
@@ -89,7 +89,7 @@ public static class AutostartSystemRegistry
 
         taskDefinition.Actions.Add(new ExecAction(ConstRegistry.AppExeLocation, "", ConstRegistry.AppLocation));
 
-        TaskService.Instance.RootFolder.RegisterTaskDefinition(ConstRegistry.ServiceName, taskDefinition);
+        TaskService.Instance.RootFolder.RegisterTaskDefinition(GetTaskName(), taskDefinition);
         
         Log.Information("Task for {UserId} created", userId);
     }
@@ -106,6 +106,8 @@ public static class AutostartSystemRegistry
         return TaskService.Instance
             .AllTasks
             .FirstOrDefault(task =>
-                task.Name.Equals(ConstRegistry.ServiceName, StringComparison.OrdinalIgnoreCase));
+                task.Name.Equals(GetTaskName(), StringComparison.OrdinalIgnoreCase));
     }
+    
+    private static string GetTaskName() => ConstRegistry.ServiceName + " + " + "SYSTEM";
 }
