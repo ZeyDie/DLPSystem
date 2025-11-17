@@ -1,12 +1,13 @@
 ﻿using System.Runtime.Versioning;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using DLPClient.Application.Handlers;
 using DLPClient.Application.Models.Settings;
 using DLPClient.Application.Services.EventLogs;
 using DLPClient.Application.Services.Https;
 using DLPClient.Application.Services.Https.Basic;
-using DLPClient.Application.Workers;
+using DLPClient.System.Workers;
+using DLPClient.User.Handlers;
+using DLPClient.User.Workers;
 using Dodo.HttpClientResiliencePolicies;
 using Serilog;
 

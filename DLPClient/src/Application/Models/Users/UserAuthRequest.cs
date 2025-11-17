@@ -1,5 +1,5 @@
 ﻿using System.Text.Json.Serialization;
-using DLPClient.Application.Handlers;
+using DLPClient.User.Handlers;
 
 namespace DLPClient.Application.Models.Users;
 

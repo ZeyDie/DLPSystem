@@ -2,7 +2,7 @@
 using DLPClient.Application.Services.EventLogs;
 using Serilog;
 
-namespace DLPClient.Application.Workers;
+namespace DLPClient.System.Workers;
 
 [SupportedOSPlatform("windows")]
 public class LoginMonitorWorker : BackgroundService

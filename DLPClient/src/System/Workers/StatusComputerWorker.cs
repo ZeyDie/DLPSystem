@@ -3,7 +3,7 @@ using DLPClient.Application.Services.Https.Basic;
 using DLPClient.Application.Utils;
 using Serilog;
 
-namespace DLPClient.Application.Workers;
+namespace DLPClient.System.Workers;
 
 public class StatusComputerWorker(
     IHttpApiClient httpClient

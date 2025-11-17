@@ -4,7 +4,7 @@ using DLPClient.Application.Services.Https.Basic;
 using Microsoft.Win32;
 using Serilog;
 
-namespace DLPClient.Application.Handlers;
+namespace DLPClient.User.Handlers;
 
 [SupportedOSPlatform("windows")]
 public class AuthHandler(

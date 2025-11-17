@@ -1,8 +1,8 @@
 ﻿using System.Runtime.Versioning;
-using DLPClient.Application.Handlers;
+using DLPClient.User.Handlers;
 using Serilog;
 
-namespace DLPClient.Application.Workers;
+namespace DLPClient.User.Workers;
 
 [SupportedOSPlatform("windows")]
 public class BackgroundWorker(
