@@ -17,7 +17,7 @@ public static class LoggerRegistry
             .ReadFrom.Configuration(
                 new ConfigurationBuilder()
                     .SetBasePath(ConstRegistry.AppLocation)
-                    .AddJsonFile(profile != null ? $"appsettings.{profile}.json" : "appsettings.json")
+                    .AddJsonFile((profile != null && profile.StartsWith("Dev")) ? $"appsettings.{profile}.json" : "appsettings.json")
                     .AddEnvironmentVariables()
                     .Build()
             )

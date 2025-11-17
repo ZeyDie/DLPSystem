@@ -80,7 +80,7 @@ public class HttpApiClient(
                     return;
                 }
 
-                Log.Information(
+                Log.Debug(
                     "Status send success {Url} => {Result}",
                     url,
                     result.Content.ReadAsStringAsync().Result

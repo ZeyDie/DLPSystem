@@ -1,4 +1,5 @@
 ﻿using System.Runtime.Versioning;
+using System.Security;
 using Microsoft.Win32;
 using Microsoft.Win32.TaskScheduler;
 using Serilog;
@@ -11,8 +12,15 @@ public static class AutostartRegistry
     [SupportedOSPlatform("windows")]
     public static void CreateAutostart()
     {
-        RegistryAutorun();
-        RegistryTask();
+        try
+        {
+            RegistryAutorun();
+            RegistryTask();
+        }
+        catch (SecurityException exception)
+        {
+            Log.Error(exception.Message);
+        }
     }
 
     [SupportedOSPlatform("windows")]
