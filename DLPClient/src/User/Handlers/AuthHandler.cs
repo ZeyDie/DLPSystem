@@ -14,14 +14,18 @@ public class AuthHandler(
     public void Init()
     {
         Log.Debug("Initializing UserHandler...");
+        
         SystemEvents.SessionSwitch += HandleSessionSwitch;
+        SystemEvents.SessionEnding += HandleSessionEnding;
+        
         HandleUser(Type.Logon);
     }
 
     public void Destroy()
     {
-        HandleUser(Type.Logoff);
+        SystemEvents.SessionEnding -= HandleSessionEnding;
         SystemEvents.SessionSwitch -= HandleSessionSwitch;
+        
         Log.Debug("Destroying UserHandler...");
     }
 
@@ -30,11 +34,11 @@ public class AuthHandler(
         switch (sessionEvent.Reason)
         {
             case SessionSwitchReason.SessionLogon:
-                Log.Information("Session logon detected");
+                Log.Information("Session logon");
                 HandleUser(Type.Logon);
                 break;
             case SessionSwitchReason.SessionLogoff:
-                Log.Information("Session logoff detected");
+                Log.Information("Session logoff");
                 HandleUser(Type.Logoff);
                 break;
             case SessionSwitchReason.SessionLock:
@@ -70,6 +74,23 @@ public class AuthHandler(
                 HandleUser(Type.Unnamed);
                 throw new ArgumentOutOfRangeException();
         }
+    }
+    
+    private void HandleSessionEnding(object sender, SessionEndingEventArgs sessionEvent)
+    {
+        switch (sessionEvent.Reason)
+        {
+            case SessionEndReasons.Logoff:
+                Log.Information("Session logoff");
+                break;
+            case SessionEndReasons.SystemShutdown:
+                Log.Information("System shutdown");
+                break;
+            default:
+                throw new ArgumentOutOfRangeException();
+        }
+
+        HandleUser(Type.Logoff);
     }
 
     private void HandleUser(Type type)
