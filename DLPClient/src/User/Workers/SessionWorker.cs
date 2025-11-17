@@ -5,18 +5,18 @@ using Serilog;
 namespace DLPClient.User.Workers;
 
 [SupportedOSPlatform("windows")]
-public class AuthWorker(
-    AuthHandler authHandler
+public class SessionWorker(
+    SessionHandler sessionHandler
 ) : BackgroundService
 {
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
         Log.Debug("BackgroundWorker running at: {time}", DateTimeOffset.Now);
 
-        authHandler.Init();
+        sessionHandler.Init();
 
         while (!stoppingToken.IsCancellationRequested) await Task.Delay(10000, stoppingToken);
 
-        authHandler.Destroy();
+        sessionHandler.Destroy();
     }
 }

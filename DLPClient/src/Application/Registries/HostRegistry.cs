@@ -47,9 +47,9 @@ public static class HostRegistry
 
                     if (UserUtil.IsUser())
                     {
-                        services.AddSingleton<AuthHandler>();
+                        services.AddSingleton<SessionHandler>();
                         
-                        services.AddHostedService<AuthWorker>();
+                        services.AddHostedService<SessionWorker>();
                     }
 
                     if (UserUtil.IsSystem())

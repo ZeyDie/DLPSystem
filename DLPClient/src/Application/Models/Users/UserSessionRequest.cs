@@ -3,7 +3,8 @@ using DLPClient.User.Handlers;
 
 namespace DLPClient.Application.Models.Users;
 
-public record UserAuthRequest(
+public record UserSessionRequest(
     [property: JsonPropertyName("login")] string Login,
-    [property: JsonPropertyName("authType")] AuthHandler.Type AuthType
+    [property: JsonPropertyName("domain")] string Domain,
+    [property: JsonPropertyName("authType")] SessionHandler.Type AuthType
 );

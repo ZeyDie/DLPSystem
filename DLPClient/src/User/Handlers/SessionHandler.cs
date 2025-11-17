@@ -7,7 +7,7 @@ using Serilog;
 namespace DLPClient.User.Handlers;
 
 [SupportedOSPlatform("windows")]
-public class AuthHandler(
+public class SessionHandler(
     IHttpApiClient httpClient
 )
 {
@@ -109,8 +109,9 @@ public class AuthHandler(
 
             if (type != Type.Unnamed)
                 httpClient.SendUserAuthRequest(
-                    new UserAuthRequest(
+                    new UserSessionRequest(
                         user,
+                        domain,
                         type
                     )
                 );

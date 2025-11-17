@@ -38,7 +38,7 @@ public class HttpApiClient(
         SendMethodRequest(Put, "/user/status", request);
     }
     
-    public void SendUserAuthRequest(UserAuthRequest request)
+    public void SendUserAuthRequest(UserSessionRequest request)
     {
         SendMethodRequest(Post, "/user/auth", request);
     }
