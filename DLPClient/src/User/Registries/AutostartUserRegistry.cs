@@ -17,7 +17,7 @@ public static class AutostartUserRegistry
         {
             RegistryTask();
         }
-        catch (SecurityException exception)
+        catch (Exception exception)
         {
             Log.Error(exception.Message);
         }
@@ -51,7 +51,7 @@ public static class AutostartUserRegistry
         taskDefinition.Settings.StopIfGoingOnBatteries = false;
         taskDefinition.Settings.ExecutionTimeLimit = TimeSpan.Zero;
         taskDefinition.Settings.AllowHardTerminate = false;
-        taskDefinition.Settings.MultipleInstances = TaskInstancesPolicy.Parallel;
+        taskDefinition.Settings.MultipleInstances = TaskInstancesPolicy.StopExisting;
 
         taskDefinition.Principal.UserId = userId;
         taskDefinition.Principal.RunLevel = TaskRunLevel.LUA;
@@ -79,5 +79,5 @@ public static class AutostartUserRegistry
                 task.Name.Equals(GetTaskName(), StringComparison.OrdinalIgnoreCase));
     }
 
-    private static string GetTaskName() => ConstRegistry.ServiceName + " + " + UserUtil.GetCurrentUser().Name;
+    private static string GetTaskName() => ConstRegistry.ServiceName + " - " + UserUtil.GetCurrentUser().Name;
 }

@@ -18,7 +18,7 @@ public static class AutostartSystemRegistry
         {
             RegistryAutorun();
         }
-        catch (SecurityException exception)
+        catch (Exception exception)
         {
             Log.Error(exception.Message);
         }
@@ -27,7 +27,7 @@ public static class AutostartSystemRegistry
         {
             RegistryTask();
         }
-        catch (SecurityException exception)
+        catch (Exception exception)
         {
             Log.Error(exception.Message);
         }
@@ -35,8 +35,8 @@ public static class AutostartSystemRegistry
 
     [SupportedOSPlatform("windows")]
     private static void RegistryAutorun()
-    {
-        const string serviceName = ConstRegistry.ServiceName;
+    { 
+        var serviceName = GetTaskName();
 
         var registryKey = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Run", true);
 
@@ -109,5 +109,5 @@ public static class AutostartSystemRegistry
                 task.Name.Equals(GetTaskName(), StringComparison.OrdinalIgnoreCase));
     }
     
-    private static string GetTaskName() => ConstRegistry.ServiceName + " + " + "SYSTEM";
+    private static string GetTaskName() => ConstRegistry.ServiceName + " - " + "SYSTEM";
 }
