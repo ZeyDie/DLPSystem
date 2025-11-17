@@ -4,7 +4,7 @@ import com.zeydie.dlpsystem.api.logger.AppLogger;
 import com.zeydie.dlpsystem.api.services.ICacheable;
 import com.zeydie.dlpsystem.api.services.ILogService;
 import com.zeydie.dlpsystem.api.services.IUserService;
-import com.zeydie.dlpsystem.api.v1.computer.request.UserAuthRequest;
+import com.zeydie.dlpsystem.api.v1.computer.request.UserSessionRequest;
 import com.zeydie.dlpsystem.server.services.cache.UserCacheService;
 import jakarta.annotation.PostConstruct;
 import lombok.NonNull;
@@ -37,7 +37,7 @@ public class UserService implements ICacheable, IUserService {
     }
 
     @Override
-    public boolean authUser(@NonNull final String login, @NonNull final UserAuthRequest.AuthType type) {
+    public boolean sessionUser(@NonNull final String login, @NonNull final UserSessionRequest.AuthType type) {
         @NonNull val message = "User " + login + " with action " + type.name();
 
         this.logger.info(message);

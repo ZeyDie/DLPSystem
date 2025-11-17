@@ -1,12 +1,12 @@
 package com.zeydie.dlpsystem.api.v1.computer.endpoint;
 
-import com.zeydie.dlpsystem.api.v1.computer.request.UserAuthRequest;
+import com.zeydie.dlpsystem.api.v1.computer.request.UserSessionRequest;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.NonNull;
 
 public interface IUserEndpoint {
-    boolean authUser(
+    boolean sessionUser(
             @NonNull final HttpServletRequest httpServletRequest,
-            @NonNull final UserAuthRequest request
+            @NonNull final UserSessionRequest request
     ) throws Exception;
 }
