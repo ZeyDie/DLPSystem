@@ -26,7 +26,7 @@ public static class AutostartUserRegistry
     [SupportedOSPlatform("windows")]
     private static void RegistryTask()
     {
-        //DeleteTask();
+        DeleteTask();
 
         if (GetTask() == null)
             CreateTask();
@@ -51,7 +51,7 @@ public static class AutostartUserRegistry
         taskDefinition.Settings.StopIfGoingOnBatteries = false;
         taskDefinition.Settings.ExecutionTimeLimit = TimeSpan.Zero;
         taskDefinition.Settings.AllowHardTerminate = false;
-        taskDefinition.Settings.MultipleInstances = TaskInstancesPolicy.StopExisting;
+        taskDefinition.Settings.MultipleInstances = TaskInstancesPolicy.Parallel;
 
         taskDefinition.Principal.UserId = userId;
         taskDefinition.Principal.RunLevel = TaskRunLevel.LUA;
@@ -76,6 +76,6 @@ public static class AutostartUserRegistry
         return TaskService.Instance
             .AllTasks
             .FirstOrDefault(task =>
-                task.Name.Equals(ConstRegistry.ServiceName, StringComparison.OrdinalIgnoreCase));
+                task.Name.Equals(ConstRegistry.ServiceName + " + " + UserUtil.GetCurrentUser().Name, StringComparison.OrdinalIgnoreCase));
     }
 }
