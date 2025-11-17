@@ -15,10 +15,12 @@ public class AuthHandler(
     {
         Log.Debug("Initializing UserHandler...");
         SystemEvents.SessionSwitch += HandleSessionSwitch;
+        HandleUser(Type.Logon);
     }
 
     public void Destroy()
     {
+        HandleUser(Type.Logoff);
         SystemEvents.SessionSwitch -= HandleSessionSwitch;
         Log.Debug("Destroying UserHandler...");
     }
