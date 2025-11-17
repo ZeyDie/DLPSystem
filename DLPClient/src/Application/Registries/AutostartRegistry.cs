@@ -15,6 +15,14 @@ public static class AutostartRegistry
         try
         {
             RegistryAutorun();
+        }
+        catch (SecurityException exception)
+        {
+            Log.Error(exception.Message);
+        }
+
+        try
+        {
             RegistryTask();
         }
         catch (SecurityException exception)
@@ -90,6 +98,7 @@ public static class AutostartRegistry
     {
         return TaskService.Instance
             .AllTasks
-            .FirstOrDefault(task => task.Name.Equals(ConstRegistry.ServiceName, StringComparison.OrdinalIgnoreCase));
+            .FirstOrDefault(task =>
+                task.Name.Equals(ConstRegistry.ServiceName, StringComparison.OrdinalIgnoreCase));
     }
 }
