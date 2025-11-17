@@ -5,7 +5,7 @@ using Serilog;
 namespace DLPClient.User.Workers;
 
 [SupportedOSPlatform("windows")]
-public class BackgroundWorker(
+public class AuthWorker(
     AuthHandler authHandler
 ) : BackgroundService
 {

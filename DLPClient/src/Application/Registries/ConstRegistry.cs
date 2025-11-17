@@ -14,7 +14,6 @@ public static class ConstRegistry
 
     public static readonly string ComputerName = Environment.MachineName;
     public static readonly string DomainName = Environment.UserDomainName;
-    public static readonly string CurrentUser = Environment.UserName;
 
     public static class SecurityConstantIds
     {

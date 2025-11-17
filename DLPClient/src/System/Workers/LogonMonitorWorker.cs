@@ -1,11 +1,12 @@
 ﻿using System.Runtime.Versioning;
 using DLPClient.Application.Services.EventLogs;
+using DLPClient.Application.Utils;
 using Serilog;
 
 namespace DLPClient.System.Workers;
 
 [SupportedOSPlatform("windows")]
-public class LoginMonitorWorker : BackgroundService
+public class LogonMonitorWorker : BackgroundService
 {
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {

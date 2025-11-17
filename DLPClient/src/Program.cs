@@ -4,11 +4,14 @@ using Serilog;
 
 Log.Logger = LoggerRegistry.CreateLogger();
 
-//UserUtil.CurrentUser = Environment.UserName;
-
 try
 {
-    Log.Information("Starting application {AppExeLocation} as {CurrentUser}", ConstRegistry.AppExeLocation, ConstRegistry.CurrentUser);
+    Log.Information(
+        "Starting application {AppExeLocation} as {CurrentUser} (Mode: {Administrator})",
+        ConstRegistry.AppExeLocation,
+        UserUtil.GetCurrentUser().Name,
+        UserUtil.IsAdministrator() ? "Administrator" : "User"
+    );
 
     AutostartRegistry.CreateAutostart();
 

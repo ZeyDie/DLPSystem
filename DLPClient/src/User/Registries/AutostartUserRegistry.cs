@@ -1,6 +1,7 @@
 ﻿using System.Runtime.Versioning;
 using System.Security;
 using DLPClient.Application.Registries;
+using DLPClient.Application.Utils;
 using Microsoft.Win32.TaskScheduler;
 using Serilog;
 using Task = Microsoft.Win32.TaskScheduler.Task;
@@ -14,7 +15,7 @@ public static class AutostartUserRegistry
     {
         try
         {
-            //RegistryTask();
+            RegistryTask();
         }
         catch (SecurityException exception)
         {
@@ -25,7 +26,7 @@ public static class AutostartUserRegistry
     [SupportedOSPlatform("windows")]
     private static void RegistryTask()
     {
-        DeleteTask();
+        //DeleteTask();
 
         if (GetTask() == null)
             CreateTask();
@@ -33,7 +34,7 @@ public static class AutostartUserRegistry
 
     private static void CreateTask()
     {
-        var userId = ConstRegistry.CurrentUser;
+        var userId = UserUtil.GetCurrentUser().Name;
 
         var loginTrigger = new LogonTrigger();
         loginTrigger.Delay = TimeSpan.FromSeconds(1);
@@ -59,6 +60,8 @@ public static class AutostartUserRegistry
         taskDefinition.Actions.Add(new ExecAction(ConstRegistry.AppExeLocation, "", ConstRegistry.AppLocation));
 
         TaskService.Instance.RootFolder.RegisterTaskDefinition(ConstRegistry.ServiceName, taskDefinition);
+
+        Log.Information("Task for {UserId} created", $"{userId}");
     }
 
     private static void DeleteTask()

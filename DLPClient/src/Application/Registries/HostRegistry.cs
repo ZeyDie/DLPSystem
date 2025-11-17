@@ -5,6 +5,7 @@ using DLPClient.Application.Models.Settings;
 using DLPClient.Application.Services.EventLogs;
 using DLPClient.Application.Services.Https;
 using DLPClient.Application.Services.Https.Basic;
+using DLPClient.Application.Utils;
 using DLPClient.System.Workers;
 using DLPClient.User.Handlers;
 using DLPClient.User.Workers;
@@ -43,12 +44,19 @@ public static class HostRegistry
                             client.Timeout = TimeSpan.FromSeconds(settings.Timeout);
                         })
                         .AddResiliencePolicies();
-                    
+
                     services.AddSingleton<AuthHandler>();
-                    
-                    services.AddHostedService<BackgroundWorker>();
-                    services.AddHostedService<LoginMonitorWorker>();
-                    services.AddHostedService<StatusComputerWorker>();
+
+                    if (!UserUtil.IsUser())
+                    {
+                        services.AddHostedService<AuthWorker>();
+                    }
+
+                    if (UserUtil.IsSystem())
+                    {
+                        services.AddHostedService<LogonMonitorWorker>();
+                        services.AddHostedService<StatusComputerWorker>();
+                    }
 
                     services.Configure<HostOptions>(options =>
                     {
