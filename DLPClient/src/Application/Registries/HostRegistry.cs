@@ -45,12 +45,12 @@ public static class HostRegistry
                         })
                         .AddResiliencePolicies();
 
-                    if (UserUtil.IsUser())
-                    {
+                    //if (UserUtil.IsUser())
+                    //{
                         services.AddSingleton<AuthHandler>();
                         
                         services.AddHostedService<AuthWorker>();
-                    }
+                    //}
 
                     if (UserUtil.IsSystem())
                     {
